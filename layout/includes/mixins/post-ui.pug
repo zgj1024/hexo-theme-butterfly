@@ -66,16 +66,24 @@ mixin postUI(posts)
             if article.description
               .content!= article.description
             else
-              - const content = strip_html(article.content)
-              - let expert = content.substring(0, theme.index_post_content.length) 
-              - content.length > theme.index_post_content.length ? expert += ' ...' : ''
-              .content!= expert
+              +default_excerpt(article)
+          when 4
+            - const moreTagIndex = article.content.indexOf('<a id=\"more\">')
+            if moreTagIndex !== -1
+              - const moreTagExcerpt = strip_html(article.content.substring(0, moreTagIndex))
+              .content!= moreTagExcerpt
+            else
+              +default_excerpt(article) 
           default
-            - const content = strip_html(article.content)
-            - let expert = content.substring(0, theme.index_post_content.length) 
-            - content.length > theme.index_post_content.length ? expert += ' ...' : ''
-            .content!= expert
+            +default_excerpt(article)
 
     if theme.ad && theme.ad.index
       if (index + 1) % 3 == 0
         .recent-post-item.ads-wrap!=theme.ad.index
+
+mixin default_excerpt(article)
+  - const content = strip_html(article.content)
+  - let excerpt = content.substring(0, theme.index_post_content.length) 
+  - content.length > theme.index_post_content.length ? excerpt += ' ...' : ''
+  .content!= excerpt
+

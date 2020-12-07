@@ -160,7 +160,9 @@ wordcount:
 # Display the article introduction on homepage
 # 1: description
 # 2: both (if the description exists, it will show description, or show the auto_excerpt)
-# 3: auto_excerpt (default)
+# 3: default_excerpt
+# 4: extra excerpt by <!--more--> tag (if the <!--more--> not exists in page content, will show the auto_excerpt)
+# 3: default_excerpt
 # false: do not show the article introduction
 index_post_content:
   method: 3
